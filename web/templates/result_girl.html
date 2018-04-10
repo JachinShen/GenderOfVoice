@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,700,400' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}"> <!-- CSS reset -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> <!-- Resource style -->
+	<script src="{{ url_for('static', filename='js/modernizr.js') }}"></script> <!-- Modernizr -->
+  	
+	<title>Gender Recognition by Voice</title>
+</head>
+<body>
+<section class="cd-intro">
+	<div class="cd-intro-content mask-2">
+		<div class="content-wrapper">
+			<div>
+				<h1 data-content="Results"><span>Results</span></h1>
+		        <p>
+			        <span data-content="You are a {{ prediction }} % boy!">You are a {{ prediction }} % girl!</span>
+		        </p>
+			</div>
+		</div>
+	</div>
+</section>
+	
+<script src="js/jquery-2.1.4.js"></script>
+<script src="js/main.js"></script> <!-- Resource jQuery -->
+</body>
+</html>

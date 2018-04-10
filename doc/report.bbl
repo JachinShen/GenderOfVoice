@@ -1,0 +1,18 @@
+\begin{thebibliography}{1}
+
+\bibitem{iFLYTEK}
+iFLYTEK.
+\newblock iflytek open platform.
+\newblock \url{http://www.xfyun.cn/}.
+
+\bibitem{kaggle}
+Kaggle.
+\newblock Gender recognition of voice.
+\newblock \url{https://www.kaggle.com/primaryobjects/voicegender}.
+
+\bibitem{voice_recognize_history}
+Wikipedia.
+\newblock Speech recognition.
+\newblock \url{https://en.wikipedia.org/wiki/Speech_recognition#History}.
+
+\end{thebibliography}
