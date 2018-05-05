@@ -86,7 +86,7 @@ def uploaded_file(filename):
         ### for modinx
         maxdom = np.nanmax(y_freq)
         mindom = np.nanmin(y_freq)
-        dfrange = maxdom - mindom
+        dfrange = log(maxdom - mindom + 1)
         changes = [abs(y_freq[index] - y_freq[index+1]) for index in range(len(y_freq)-1)]
         if mindom == maxdom:
             modindx = 0
