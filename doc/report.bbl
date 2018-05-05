@@ -1,4 +1,31 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{SVC_feature_importance}
+Aneesha Bakharia.
+\newblock Visualising top features in linear svm with scikit learn and
+  matplotlib.
+\newblock
+  \url{https://medium.com/@aneesha/visualising-top-features-in-linear-svm-with-scikit-learn-and-matplotlib-3454ab18a14d}.
+
+\bibitem{html_template}
+CodyHouse.
+\newblock Animated intro section.
+\newblock \url{https://codyhouse.co/gem/animated-intro-section/}.
+
+\bibitem{css_flask}
+feesland.
+\newblock Flask 学习（四）静态文件.
+\newblock \url{http://www.cnblogs.com/feeland/p/4640695.html}.
+
+\bibitem{flask}
+flask.
+\newblock Flask (a python microframework).
+\newblock \url{http://flask.pocoo.org/}.
+
+\bibitem{upload_file}
+Flask.
+\newblock Uploading files.
+\newblock \url{http://flask.pocoo.org/docs/0.12/patterns/fileuploads}.
 
 \bibitem{iFLYTEK}
 iFLYTEK.
@@ -9,6 +36,64 @@ iFLYTEK.
 Kaggle.
 \newblock Gender recognition of voice.
 \newblock \url{https://www.kaggle.com/primaryobjects/voicegender}.
+
+\bibitem{ffmpeg_convert}
+martineau.
+\newblock Convert mp3 to wav using ffmpeg for vbr.
+\newblock
+  \url{https://superuser.com/questions/675342/convert-mp3-to-wav-using-ffmpeg-for-vbr}.
+
+\bibitem{flask_deploy}
+Melwood.
+\newblock Flask + gunicorn + nginx 部署.
+\newblock \url{https://jiayi.space/post/flask-gunicorn-nginx-bu-shu}.
+
+\bibitem{r_fund}
+R.
+\newblock fund function.
+\newblock
+  \url{https://www.rdocumentation.org/packages/seewave/versions/2.0.5/topics/fund}.
+
+\bibitem{rpy2}
+rpy2.
+\newblock R in python.
+\newblock \url{https://rpy2.bitbucket.io/}.
+
+\bibitem{sklearn_random_forest}
+sklearn.
+\newblock sklearn.ensemble.randomforestclassifier.
+\newblock
+  \url{http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html}.
+
+\bibitem{sklearn_logistic}
+sklearn.
+\newblock sklearn.linear\_model.logisticregression.
+\newblock
+  \url{http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html}.
+
+\bibitem{scale_feature}
+sklearn.
+\newblock sklearn.preprocessing.minmaxscalar.
+\newblock
+  \url{http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html}.
+
+\bibitem{sklearn_SVC}
+sklearn.
+\newblock sklearn.svm.svc.
+\newblock
+  \url{http://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html}.
+
+\bibitem{sklearn_decision_tree}
+sklearn.
+\newblock sklearn.tree.decisiontreeclassifier.
+\newblock
+  \url{http://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html}.
+
+\bibitem{upload_button}
+Osvaldas Valutis.
+\newblock Styling \& customizing file inputs the smart way.
+\newblock
+  \url{https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way}.
 
 \bibitem{voice_recognize_history}
 Wikipedia.

@@ -7,6 +7,7 @@ import numpy as np
 import rpy2.robjects as robjects
 from rpy2.robjects.packages import importr
 import wave
+from math import log
 
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = set(['wav', 'mp3', 'm4a', 'aac', 'ogg', 'wma'])
@@ -70,19 +71,37 @@ def uploaded_file(filename):
         analysis = seewave.specprop(songspec, f = framerate, flim = robjects.FloatVector([0, 280.0/1000]), plot = False)
         ff = seewave.fund(wave_data_r, f = framerate, ovlp = 50, threshold = 5, 
                         fmax = 280, ylim=robjects.FloatVector([0, 280.0/1000]), plot = False, wl = 2048)
+        y_freq = seewave.dfreq(wave_data_r, f = framerate, ylim=robjects.FloatVector([0, 280.0/1000]), ovlp = 0, plot = False, threshold = 5, bandpass = robjects.FloatVector([0, 22*1000]) , fftw = True, wl = 2048)
+
+        ff = np.array(ff).T[1]
+        y_freq = np.array(y_freq).T[1]
                         
-        sd = analysis[1][0] / 1000
-        Q25 = analysis[5][0] / 1000
+        meanfun = np.nanmean(ff)
         IQR = analysis[7][0] / 1000
+        Q75 = analysis[6][0] / 1000
+        minfun = np.nanmin(ff)
+        sfm = analysis[11][0]
         sh = analysis[12][0]
-        meanfun = np.nanmean(np.array(ff).T[1])
+        Q25 = analysis[5][0] / 1000
+        ### for modinx
+        maxdom = np.nanmax(y_freq)
+        mindom = np.nanmin(y_freq)
+        dfrange = maxdom - mindom
+        changes = [abs(y_freq[index] - y_freq[index+1]) for index in range(len(y_freq)-1)]
+        if mindom == maxdom:
+            modindx = 0
+        else:
+            modindx = np.nanmean(changes)/dfrange
+        skew = log(analysis[9][0] + 1)
+        median = analysis[3][0] / 1000
+        sd = analysis[1][0] / 1000
+        mode = analysis[4][0] / 1000
         
-        my_features_raw = np.array([IQR, meanfun, Q25, sd, sh])
+        my_features_raw = np.array([meanfun, IQR, Q75, minfun, sfm, sh, Q25, modindx, skew, median, sd, mode, mindom])
         my_features = (my_features_raw - features_min_reduced) \
              / (features_max_reduced - features_min_reduced)
         
-        
-        prediction = model.predict_proba(my_features.reshape(1, 5))[0]
+        prediction = model.predict_proba(my_features.reshape(1, 13))[0]
         
         if prediction[0] < 0.5:
             return render_template('result_boy.html',prediction=prediction[1] * 100)

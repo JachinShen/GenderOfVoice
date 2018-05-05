@@ -44,4 +44,5 @@
 - Html templates: https://codyhouse.co/gem/animated-intro-section/
 - How to change css in flask: http://www.cnblogs.com/feeland/p/4640695.html
 - How to customize upload button: https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/
-- Deploy flask using gunicorn and nginx: http://python.jobbole.com/87666/
+- Deploy flask using gunicorn and nginx: https://jiayi.space/post/flask-gunicorn-nginx-bu-shu
+

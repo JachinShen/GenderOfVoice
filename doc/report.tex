@@ -1,56 +1,6 @@
-\documentclass[12pt,a4paper]{article}
-\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
-\usepackage{epsfig,graphicx,subfigure}
-\usepackage{enumitem,balance}
-\usepackage{wrapfig}
-\usepackage{mathrsfs,euscript}
-\usepackage[usenames]{xcolor}
-\usepackage{hyperref}
-\usepackage[vlined,ruled,commentsnumbered,linesnumbered]{algorithm2e}
-\usepackage{svg}
-
-\newtheorem{theorem}{Theorem}
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{corollary}[theorem]{Corollary}
-\newtheorem{exercise}{Exercise}
-\newtheorem*{solution}{Solution}
-\newtheorem{definition}{Definition}
-\theoremstyle{definition}
-
-\renewcommand{\thefootnote}{\fnsymbol{footnote}}
-
-\newcommand{\postscript}[2]
- {\setlength{\epsfxsize}{#2\hsize}
-  \centerline{\epsfbox{#1}}}
-
-\renewcommand{\baselinestretch}{1.0}
-
-\setlength{\oddsidemargin}{-0.365in}
-\setlength{\evensidemargin}{-0.365in}
-\setlength{\topmargin}{-0.3in}
-\setlength{\headheight}{0in}
-\setlength{\headsep}{0in}
-\setlength{\textheight}{10.1in}
-\setlength{\textwidth}{7in}
-\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
-\makeatletter
-\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
-
-\hypersetup{
-colorlinks=true,
-linkcolor=black,
-anchorcolor=black,
-citecolor=black,
-}
-
-\title{Machine Learning Nano Degree \\
-    Gender Recognition of Voice }
-\author{Jiacheng Shen}
-\date{\today}
-
+\input{precompile}
 \begin{document}
-\noindent
+%\noindent
 
 \maketitle
 \bibliographystyle{plain}
@@ -58,188 +8,32 @@ citecolor=black,
 
 \newpage
 
-\section{Definition}
+\input{Definition}
 
-\subsection{Project Overview}
-Voice recognition has a long history. In 1952, Bell Lab designed a system to recongize single digit. Then, great progress was made by methods like Linear Predictive Coding, Dynamic Time Warp and Hidden Markov Model. Nowadays, Machine Learning models like RNN are applied.\cite{voice_recognize_history} For example, the famous Chinese company iFLYTEK can reach an accuracy of 98\%.\cite{iFLYTEK} \\
+\input{Analysis}
 
-\noindent
-In this project, the goal is to build a model to recongize the gender of voice. The dataset can be found on Kaggle\cite{kaggle}. The raw wave files have been extracted features by R. There are 1584 female samples and 1584 male samples. Finally, a web service will be constructed based on the trained model as an application.
+\input{Methodology}
 
-\subsection{Problem Statement}
+\input{Results}
 
-This project is a \textbf{suprivised binary classification} problem. The voice can be classfied to female or male. The goal is to use the given features of voice, build a model and recongize the gender of voice. 
-
-\subsection{Merrics}
-
-Since the dataset is balanced (half female and half male) and the importance of both genders are the same, so recall and precision rate mean nothing. So accuracy is chosed to evauate the model. What's more, training and predicting time is also considered because the model need to be deployed on CPU server.
-
-\begin{enumerate}
-    \item \textbf{Accuracy}. Accuracy counts how many samples are predicted correctly.
-        $$ \text{Accuracy} = \frac{\sum \text{Correctly predicted}}{{\sum \text{All Samples}}} \times 100 \% $$
-    
-    \item \textbf{Time}. To construct a web service on a normal CPU server, training and predicting time is also taken into account. The user cannot wait too long for the response.
-\end{enumerate}
-
-\section{Analysis}
-\subsection{Data Exploration}
-
-The dataset is downloaded from Kaggle. There are 22 features and 3168 samples. It is a balanced dataset with 1584 females and 1584 males.\\
-
-\noindent
-As shown in Table \ref{tab:feature_table}, there are 22 features about the voice and the last one is the label, which need to be predicted female or male. \\
-\begin{table}[htbp]
-    \centering
-    \begin{tabular}{r|lcccccc}
-        Category              & Names    \\
-        \hline
-        Frequency             & meanfreq  & sd       & median & Q25  & Q75  & IQR      \\
-        Spectrum              & skew      & kurt     & sp.ent & sfm  & mode & centroid  & peakf \\
-        Fundamental Frequency & meanfun   & minfun   & maxfun &     \\
-        Domain Frequency      & meandom   & mindom   & maxdom &     \\
-        Range                 & dfrange   & modindx \\
-        output                & label    \\
-    \end{tabular}
-    \caption{\label{tab:feature_table}features}
-\end{table}
-
-\noindent
-More details about the features are shown below.\cite{kaggle}
-
-\begin{enumerate}
-\item meanfreq: mean frequency (in kHz)
-\item sd: standard deviation of frequency
-\item median: median frequency (in kHz)
-\item Q25: first quantile (in kHz)
-\item Q75: third quantile (in kHz)
-\item IQR: interquantile range (in kHz)
-\item skew: skewness (see note in specprop description)
-\item kurt: kurtosis (see note in specprop description)
-\item sp.ent: spectral entropy
-\item sfm: spectral flatness
-\item mode: mode frequency
-\item centroid: frequency centroid (see specprop)
-\item peakf: peak frequency (frequency with highest energy)
-\item meanfun: average of fundamental frequency measured across acoustic signal
-\item minfun: minimum fundamental frequency measured across acoustic signal
-\item maxfun: maximum fundamental frequency measured across acoustic signal
-\item meandom: average of dominant frequency measured across acoustic signal
-\item mindom: minimum of dominant frequency measured across acoustic signal
-\item maxdom: maximum of dominant frequency measured across acoustic signal
-\item dfrange: range of dominant frequency measured across acoustic signal
-\item modindx: modulation index. Calculated as the accumulated absolute difference between adjacent measurements of fundamental frequencies divided by the frequency range
-\item label: male or female 
-\end{enumerate}
-
-\noindent
-The Table \ref{tab:sample_table} showes the head and the tail of the dataset. The features except label is all continuous number. The first half are all males and the second half are all females. Therefore, the dataset need to be randomly rearranged to break this distribution. \\
-
-\begin{table}[htbp]
-    \centering
-    \begin{tabular}{r|lcccccc}
-        Features & Sample 0  & Sample 1   & Sample 3166 & Sample 3167 \\
-        \hline
-        meanfreq & 0.059781  & 0.0660087  & 0.143659    & 0.165509     & \\
-        sd       & 0.0642413 & 0.06731    & 0.0906283   & 0.0928835    & \\
-        median   & 0.0320269 & 0.0402287  & 0.184976    & 0.183044     & \\
-        Q25      & 0.0150715 & 0.0194139  & 0.0435081   & 0.0700715    & \\
-        Q75      & 0.0901934 & 0.0926662  & 0.219943    & 0.250827     & \\
-        IQR      & 0.075122  & 0.0732523  & 0.176435    & 0.180756     & \\
-        skew     & 12.8635   & 22.4233    & 1.59106     & 1.70503      & \\
-        kurt     & 274.403   & 634.614    & 5.3883      & 5.76912      & \\
-        sp.ent   & 0.893369  & 0.892193   & 0.950436    & 0.938829     & \\
-        sfm      & 0.491918  & 0.513724   & 0.67547     & 0.601529     & \\
-        mode     & 0         & 0          & 0.212202    & 0.267702     & \\
-        centroid & 0.059781  & 0.0660087  & 0.143659    & 0.165509     & \\
-        meanfun  & 0.0842791 & 0.107937   & 0.172375    & 0.185607     & \\
-        minfun   & 0.0157017 & 0.0158259  & 0.0344828   & 0.0622568    & \\
-        maxfun   & 0.275862  & 0.25       & 0.25        & 0.271186     & \\
-        meandom  & 0.0078125 & 0.00901442 & 0.79136     & 0.227022     & \\
-        mindom   & 0.0078125 & 0.0078125  & 0.0078125   & 0.0078125    & \\
-        maxdom   & 0.0078125 & 0.0546875  & 3.59375     & 0.554688     & \\
-        dfrange  & 0         & 0.046875   & 3.58594     & 0.546875     & \\
-        modindx  & 0         & 0.0526316  & 0.311002    & 0.35         & \\
-        label    & male      & male       & female      & female       & \\
-    \end{tabular}
-    \caption{\label{tab:sample_table}samples}
-\end{table}
-
-\noindent
-According to the Table \ref{tab:describe_table}, the distributions and ranges of features differ a lot from each other. Thus, normalization is needed to prevent preferrence on large features. \\
-
-\begin{table}[htbp]
-    \centering
-    \begin{tabular}{r|lccccccc}
-        & count    & mean   & std       & min        & 25\%     & 50\%     & 75\%     & max \\
-        \hline
-    meanfreq & 3168.0 & 0.180907  & 0.029918   & 0.039363 & 0.163662 & 0.184838 & 0.199146  & 0.251124       \\
-    sd       & 3168.0 & 0.057126  & 0.016652   & 0.018363 & 0.041954 & 0.059155 & 0.067020  & 0.115273       \\
-    median   & 3168.0 & 0.185621  & 0.036360   & 0.010975 & 0.169593 & 0.190032 & 0.210618  & 0.261224       \\
-    Q25      & 3168.0 & 0.140456  & 0.048680   & 0.000229 & 0.111087 & 0.140286 & 0.175939  & 0.247347       \\
-    Q75      & 3168.0 & 0.224765  & 0.023639   & 0.042946 & 0.208747 & 0.225684 & 0.243660  & 0.273469       \\
-    IQR      & 3168.0 & 0.084309  & 0.042783   & 0.014558 & 0.042560 & 0.094280 & 0.114175  & 0.252225       \\
-    skew     & 3168.0 & 3.140168  & 4.240529   & 0.141735 & 1.649569 & 2.197101 & 2.931694  & 34.725453      \\
-    kurt     & 3168.0 & 36.568461 & 134.928661 & 2.068455 & 5.669547 & 8.318463 & 13.648905 & 1309.612887    \\
-    sp.ent   & 3168.0 & 0.895127  & 0.044980   & 0.738651 & 0.861811 & 0.901767 & 0.928713  & 0.981997       \\
-    sfm      & 3168.0 & 0.408216  & 0.177521   & 0.036876 & 0.258041 & 0.396335 & 0.533676  & 0.842936       \\
-    mode     & 3168.0 & 0.165282  & 0.077203   & 0.000000 & 0.118016 & 0.186599 & 0.221104  & 0.280000       \\
-    centroid & 3168.0 & 0.180907  & 0.029918   & 0.039363 & 0.163662 & 0.184838 & 0.199146  & 0.251124       \\
-    meanfun  & 3168.0 & 0.142807  & 0.032304   & 0.055565 & 0.116998 & 0.140519 & 0.169581  & 0.237636       \\
-    minfun   & 3168.0 & 0.036802  & 0.019220   & 0.009775 & 0.018223 & 0.046110 & 0.047904  & 0.204082       \\
-    maxfun   & 3168.0 & 0.258842  & 0.030077   & 0.103093 & 0.253968 & 0.271186 & 0.277457  & 0.279114       \\
-    meandom  & 3168.0 & 0.829211  & 0.525205   & 0.007812 & 0.419828 & 0.765795 & 1.177166  & 2.957682       \\
-    mindom   & 3168.0 & 0.052647  & 0.063299   & 0.004883 & 0.007812 & 0.023438 & 0.070312  & 0.458984       \\
-    maxdom   & 3168.0 & 5.047277  & 3.521157   & 0.007812 & 2.070312 & 4.992188 & 7.007812  & 21.867188      \\
-    dfrange  & 3168.0 & 4.994630  & 3.520039   & 0.000000 & 2.044922 & 4.945312 & 6.992188  & 21.843750      \\
-    modindx  & 3168.0 & 0.173752  & 0.119454   & 0.000000 & 0.099766 & 0.139357 & 0.209183  & 0.932374       \\
-    \end{tabular}
-    \caption{\label{tab:describe_table}describe}
-\end{table}
-
-
-\subsection{Exploratory Visualization}
-
-The figure \ref{fig:feature_distribution} shows the histogram of each feature. The features \textbf{IQR}, \textbf{meanfun} and \textbf{sd} have two peak, which may mean the difference between the voice of female and male.
-
-\begin{figure}[htpb]
-    \centering
-    \includesvg[width = 1.0 \textwidth]{Distribution.svg}
-    \caption{Distribution of Features}
-    \label{fig:feature_distribution}
-\end{figure}
-
-\subsection{Algorithms and Techniques}
-
-I use sklearn package from python to do this project. The features of dataset are all numbers, so no encoding is needed. The label has only two cases, so converting it into a binary number is enought. Some features have some skewness, so the log transformation need to be applied. The dataset is balanced, but the first half are all males, so I will use train\_test\_split with random state to split Training sets, Validation sets and Testing sets. Since it is a binary classification problem, I choose LogisticRegression, DecisionTree, RandomForest and SVM as candidates. After choosing the model with the best performance, I will use GridSearch to optimize this model.
-
-\begin{enumerate}
-    \item LogisticRegression:
-        \begin{itemize}
-            \item Pros: LogisticRegression try to find a line fit the data best with least error. The model can be hardly over-fitting. Thanks to Calculus, the parameters can be calculated fast. So this model trains and predicts fast. What's more, it can give us the correlation between features and label.
-            \item Cons: It can only express linear correlation, so if the data has nolinear relations,
-        \end{itemize}
-    \item
-    \item
-    \item
-\end{enumerate}
-
-\subsection{Benchmark}
-
-\section{Methodology}
-\subsection{Data Preprocessing}
-\subsection{Implementation}
-\subsection{Refinement}
-
-\section{Results}
-\subsection{Model Evaluation and Validation}
-\subsection{Justification}
-
-\section{Conclusion}
-\subsection{Free-Form Visualization}
-\subsection{Reflection}
-\subsection{Improvement}
+\input{Conclusion}
 
 \section{Application}
+I deploy a web service to recongize the uploaded voice. I choose Python as the main language to implement it. After searching, I use Flask\cite{flask} as the framework, use rpy2\cite{rpy2} to extract features from raw voice by R packages.
+
+The source code is in folder web. To deploy it, I search and solve the following problems.
+\begin{enumerate}
+    \item How to upload file using flask \cite{upload_file}
+    \item The returned values of fund \cite{r_fund}
+    \item How to scale on reduced feature \cite{scale_feature}
+    \item How to convert voice in to 'wav' type using ffmpeg \cite{ffmpeg_convert}
+    \item The beautiful html template \cite{html_template}
+    \item How to change css in flask \cite{css_flask}
+    \item How to customize upload button \cite{upload_button}
+    \item How to deploy flask with gunicorn and nginx \cite{flask_deploy}
+\end{enumerate}
+
+The web service is deployed on \url{http://qasd.tk:4040}
 
 \section{Reference}
 \bibliography{report}
