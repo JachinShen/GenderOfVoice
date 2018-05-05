@@ -1,6 +1,8 @@
 # Machine Learning Nano Degree
 ## Gender Recognition of Voice
 
+Proposal review: https://review.udacity.com/#!/reviews/1182282
+
 ## OS
 - Ubuntu 16.04
 - Kernel 4.14.17
@@ -45,4 +47,3 @@
 - How to change css in flask: http://www.cnblogs.com/feeland/p/4640695.html
 - How to customize upload button: https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/
 - Deploy flask using gunicorn and nginx: https://jiayi.space/post/flask-gunicorn-nginx-bu-shu
-
