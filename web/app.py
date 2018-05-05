@@ -86,7 +86,7 @@ def uploaded_file(filename):
         ### for modinx
         maxdom = np.nanmax(y_freq)
         mindom = np.nanmin(y_freq)
-        dfrange = log(maxdom - mindom + 1)
+        dfrange = maxdom - mindom
         changes = [abs(y_freq[index] - y_freq[index+1]) for index in range(len(y_freq)-1)]
         if mindom == maxdom:
             modindx = 0
@@ -96,6 +96,8 @@ def uploaded_file(filename):
         median = analysis[3][0] / 1000
         sd = analysis[1][0] / 1000
         mode = analysis[4][0] / 1000
+
+        dfrange = log(dfrange + 1)
         
         my_features_raw = np.array([meanfun, IQR, Q75, minfun, sfm, sh, Q25, modindx, skew, median, sd, mode, mindom])
         my_features = (my_features_raw - features_min_reduced) \
